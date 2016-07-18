@@ -17,6 +17,7 @@
 
 
 import feedparser
+from jinja2 import Template
 
 
 class FeedError(Exception):
@@ -63,3 +64,9 @@ class Planet:
 
             articles = self._get_articles(feed)
             self._articles.extend(articles)
+
+    def write_page(self, template, destination):
+        articles = self._articles
+
+        template = Template(template.open().read())
+        destination.open(mode='w').write(template.render(articles=articles))

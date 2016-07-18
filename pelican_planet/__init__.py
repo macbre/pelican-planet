@@ -16,6 +16,8 @@
 # along with pelican-planet.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from pathlib import Path
+
 from pelican import signals
 from pelican.generators import PagesGenerator
 
@@ -29,9 +31,12 @@ def generate(generator):
     config = generator.context
 
     feeds = config['PLANET_FEEDS']
+    template = Path(config['PLANET_TEMPLATE'])
+    destination = Path(config['PLANET_PAGE'])
 
     planet = Planet(feeds)
     planet.get_feeds()
+    planet.write_page(template, destination)
 
 
 def register():

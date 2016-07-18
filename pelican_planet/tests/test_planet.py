@@ -16,6 +16,7 @@
 # along with pelican-planet.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from pathlib import Path
 from ssl import CertificateError
 
 import feedparser
@@ -105,3 +106,31 @@ def test_get_feeds_ssl_error(monkeypatch, datadir):
     p.get_feeds()
 
     assert p._articles == []
+
+
+def test_write_page(datadir, tmpdir):
+    from pelican_planet.planet import Planet
+
+    templatepath = Path(datadir.join('planet.md.tmpl').strpath)
+    destinationpath = Path(tmpdir.join('planet.md').strpath)
+    assert not destinationpath.exists()
+
+    expected = '\n\n\n'.join([
+        'Some blogs aggregated here.',
+        '# Sloubi 325 !',
+        '# Sloubi 324 !',
+        '# Sloubi 5 !',
+        '# Sloubi 4 !',
+        '# Sloubi 3 !',
+        '# Sloubi 2 !',
+        '# Sloubi 1 !',
+        ])
+
+    feeds = {
+        'Le blog à Perceval': 'file://%s/perceval.atom.xml' % datadir,
+        }
+    p = Planet(feeds)
+    p.get_feeds()
+    p.write_page(templatepath, destinationpath)
+
+    assert destinationpath.open().read().strip() == expected
