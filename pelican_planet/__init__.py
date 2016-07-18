@@ -16,5 +16,14 @@
 # along with pelican-planet.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from pelican import signals
+from pelican.generators import PagesGenerator
+
+
+def generate(generator):
+    if not isinstance(generator, PagesGenerator):
+        return
+
+
 def register():
-    pass
+    signals.generator_init.connect(generate)
