@@ -1,1 +1,2 @@
+feedparser==5.2.1
 pelican==3.7.1

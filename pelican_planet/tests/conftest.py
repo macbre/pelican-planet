@@ -16,23 +16,9 @@
 # along with pelican-planet.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from pelican import signals
-from pelican.generators import PagesGenerator
-
-from .planet import Planet
+import pytest
 
 
-def generate(generator):
-    if not isinstance(generator, PagesGenerator):
-        return
-
-    config = generator.context
-
-    feeds = config['PLANET_FEEDS']
-
-    planet = Planet(feeds)
-    planet.get_feeds()
-
-
-def register():
-    signals.generator_init.connect(generate)
+@pytest.fixture
+def datadir(pytestconfig):
+    return pytestconfig.rootdir.join('pelican_planet', 'tests', 'data')
