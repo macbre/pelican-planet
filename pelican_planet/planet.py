@@ -16,22 +16,8 @@
 # along with pelican-planet.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from pelican import signals
-from pelican.generators import PagesGenerator
+class Planet:
+    def __init__(self, feeds):
+        self._feeds = feeds
 
-from .planet import Planet
-
-
-def generate(generator):
-    if not isinstance(generator, PagesGenerator):
-        return
-
-    config = generator.context
-
-    feeds = config['PLANET_FEEDS']
-
-    planet = Planet(feeds)
-
-
-def register():
-    signals.generator_init.connect(generate)
+        self._articles = []
