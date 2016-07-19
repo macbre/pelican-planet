@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Le gras, c'est la vie</title>
+  <link href="https://legrascestlavie.fr/" rel="alternate"></link>
+  <link href="https://legrascestlavie.fr/feeds/all.atom.xml" rel="self"></link>
+  <id>https://legrascestlavie.fr/</id>
+  <updated>2016-11-20T08:20:00Z</updated>
+  <entry>
+    <title>Le gras, c'est la vie</title>
+    <link href="https://legrascestlavie.fr/blog/2016/01/01/le-gras-cest-la-vie/" rel="alternate"></link>
+    <updated>2016-01-01T00:00:00Z</updated>
+    <author>
+      <name>Karadoc de Vannes</name>
+    </author>
+    <id>tag:legrascestlavie.fr,2016-01-01:blog/2016/01/01/le-gras-cest-la-vie/</id>
+    <summary type="html">
+      &lt;p&gt;Ça y est… je vois trouble. C’est le manque de gras, je me dessèche.&lt;/p&gt;
+    </summary>
+    <category term="food"></category>
+    <category term="life"></category>
+  </entry>
+  <entry>
+    <title>Sept cent quarante-quatre</title>
+    <link href="https://legrascestlavie.fr/blog/2016/11/20/sept-cent-quarante-quatre/" rel="alternate"></link>
+    <updated>2016-11-20T08:20:00Z</updated>
+    <author>
+      <name>Karadoc de Vannes</name>
+    </author>
+    <id>tag:legrascestlavie.fr,2016-11-20:blog/2016/11/20/sept-cent-quarante-quatre/</id>
+    <summary type="html">
+      &lt;p&gt;Par exemple, vous prenez aujourd’hui. Vous comptez sept jours. Ça vous emmène dans une semaine.&lt;/p&gt;
+      &lt;p&gt;Et bien on sera exactement le même jour qu’aujourd’hui…&lt;/p&gt;
+      &lt;p&gt;À une vache près, hein… C’est pas une science exacte.
+    </summary>
+    <category term="maths"></category>
+  </entry>
+  <entry>
+    <title>Unagi</title>
+    <link href="https://legrascestlavie.fr/blog/2016/06-15/unagi/" rel="alternate"></link>
+    <updated>2016-06-15T08:15:00Z</updated>
+    <author>
+      <name>Karadoc de Vannes</name>
+    </author>
+    <id>tag:legrascestlavie.fr,2016-06-15:blog/2016/06/15/unagi/</id>
+    <summary type="html">
+      &lt;p&gt;Lorsqu'on le tient par la partie sporadique, ou boulière, le fenouil est un objet redondant.&lt;/p&gt;
+      &lt;p&gt;Tout à l’heure, on a vu que le chapelet de saucisses n’était pas un objet redondant. Et pourtant, on a pu lui trouver une utilisation périmétrique en s’en servant comme un fouet.&lt;/p&gt;
+    </summary>
+    <category term="food"></category>
+    <category term="combat"></category>
+  </entry>
+</feed>

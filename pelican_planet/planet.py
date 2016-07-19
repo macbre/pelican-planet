@@ -16,6 +16,8 @@
 # along with pelican-planet.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from operator import attrgetter
+
 import feedparser
 from jinja2 import Template
 
@@ -74,7 +76,8 @@ class Planet:
             self._articles.extend(articles)
 
     def write_page(self, template, destination):
-        articles = self._articles
+        articles = sorted(
+            self._articles, key=attrgetter('updated'), reverse=True)
 
         template = Template(template.open().read())
         destination.open(mode='w').write(template.render(articles=articles))

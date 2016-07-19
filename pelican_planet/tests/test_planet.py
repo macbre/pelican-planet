@@ -134,3 +134,35 @@ def test_write_page(datadir, tmpdir):
     p.write_page(templatepath, destinationpath)
 
     assert destinationpath.open().read().strip() == expected
+
+
+def test_write_page_from_multiple_feeds(datadir, tmpdir):
+    from pelican_planet.planet import Planet
+
+    templatepath = Path(datadir.join('planet.md.tmpl').strpath)
+    destinationpath = Path(tmpdir.join('planet.md').strpath)
+    assert not destinationpath.exists()
+
+    expected = '\n\n\n'.join([
+        'Some blogs aggregated here.',
+        '# Sept cent quarante-quatre',
+        '# Sloubi 325 !',
+        '# Sloubi 324 !',
+        '# Unagi',
+        '# Sloubi 5 !',
+        '# Sloubi 4 !',
+        '# Sloubi 3 !',
+        '# Sloubi 2 !',
+        '# Sloubi 1 !',
+        "# Le gras, c'est la vie",
+        ])
+
+    feeds = {
+        'Le blog à Perceval': 'file://%s/perceval.atom.xml' % datadir,
+        "L'auberge à Karadoc": 'file://%s/karadoc.atom.xml' % datadir,
+        }
+    p = Planet(feeds)
+    p.get_feeds()
+    p.write_page(templatepath, destinationpath)
+
+    assert destinationpath.open().read().strip() == expected
