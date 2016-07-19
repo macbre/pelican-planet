@@ -59,6 +59,9 @@ Each item of this list will have the following attributes:
 
 *   `title`: The title of the article;
 
+*   `updated`: The date at which the article was last updated, as a
+    timezone-aware `datetime` object;
+
 *   `author`: The author of the article;
 
 *   `link`: The URL to the article on its original website;

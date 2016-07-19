@@ -19,6 +19,8 @@
 import feedparser
 from jinja2 import Template
 
+from .utils import make_date
+
 
 class FeedError(Exception):
     pass
@@ -49,7 +51,13 @@ class Planet:
         return parsed
 
     def _get_articles(self, feed):
-        articles = feed['entries']
+        def _get_articles():
+            for article in feed['entries']:
+                article['updated'] = make_date(article['updated'])
+
+                yield article
+
+        articles = list(_get_articles())
 
         return articles
 
