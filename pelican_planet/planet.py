@@ -55,12 +55,13 @@ class Planet:
 
         return parsed
 
-    def _get_articles(self, feed):
+    def _get_articles(self, feed, feed_name):
         def _get_articles():
             for article in feed['entries']:
                 article['updated'] = make_date(article['updated'])
                 article['summary'] = make_summary(
                     article['summary'], max_words=self._max_summary_length)
+                article['feed_name'] = feed_name
 
                 yield article
 
@@ -79,7 +80,7 @@ class Planet:
                 print('ERROR: %s' % e)
                 continue
 
-            articles = self._get_articles(feed)
+            articles = self._get_articles(feed, name)
             self._articles.extend(articles)
 
     def write_page(self, template, destination, max_articles=None):

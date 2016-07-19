@@ -68,6 +68,9 @@ Each item of this list will have the following attributes:
 
 *   `summary`: The summary text of the article;
 
+*   `feed_name`: The name of the feed from which the article originated, as
+    defined in the Pelican config file;
+
 ## Optional configuration
 
 You can have more control on the generated page, by setting a few more options
