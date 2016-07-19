@@ -38,3 +38,23 @@ def test_make_date(date_string, expected):
     expected = datetime(*expected, tzinfo=timezone.utc)
 
     assert dt == expected
+
+
+@pytest.mark.parametrize(
+    'text, expected, max_words',
+    [
+        ('<p>A short text.</p>', '<p>A short text.</p>', None),
+        ('<p>A short text.</p>', '<p>A short text.</p>', 10),
+        ('<p>A short text.</p>', '<p>A short …</p>', 2),
+    ],
+    ids=[
+        'no-limit',
+        'big-limit',
+        'small-limit',
+    ])
+def test_make_summary(text, expected, max_words):
+    from pelican_planet.utils import make_summary
+
+    summary = make_summary(text, max_words=max_words)
+
+    assert summary == expected

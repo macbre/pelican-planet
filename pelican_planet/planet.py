@@ -21,7 +21,7 @@ from operator import attrgetter
 import feedparser
 from jinja2 import Template
 
-from .utils import make_date
+from .utils import make_date, make_summary
 
 
 class FeedError(Exception):
@@ -29,8 +29,9 @@ class FeedError(Exception):
 
 
 class Planet:
-    def __init__(self, feeds):
+    def __init__(self, feeds, max_summary_length=None):
         self._feeds = feeds
+        self._max_summary_length = max_summary_length
 
         self._articles = []
 
@@ -56,6 +57,8 @@ class Planet:
         def _get_articles():
             for article in feed['entries']:
                 article['updated'] = make_date(article['updated'])
+                article['summary'] = make_summary(
+                    article['summary'], max_words=self._max_summary_length)
 
                 yield article
 

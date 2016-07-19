@@ -66,6 +66,8 @@ Each item of this list will have the following attributes:
 
 *   `link`: The URL to the article on its original website;
 
+*   `summary`: The summary text of the article;
+
 ## Optional configuration
 
 You can have more control on the generated page, by setting a few more options
@@ -74,6 +76,12 @@ in your Pelican config file:
 *   `PLANET_MAX_ARTICLES`: The maximum number of articles to show on the page.
 
     By default, all articles from all feeds will be added to the page.
+
+*   `PLANET_MAX_SUMMARY_LENGTH`: The maximum number of words kept from the
+    summary.
+
+    By default the `summary` of the article will be the full text coming from
+    the feed.
 
 ## Legalities
 
