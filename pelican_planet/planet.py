@@ -75,9 +75,10 @@ class Planet:
             articles = self._get_articles(feed)
             self._articles.extend(articles)
 
-    def write_page(self, template, destination):
+    def write_page(self, template, destination, max_articles=None):
         articles = sorted(
             self._articles, key=attrgetter('updated'), reverse=True)
+        articles = articles[:max_articles]
 
         template = Template(template.open().read())
         destination.open(mode='w').write(template.render(articles=articles))

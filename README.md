@@ -68,7 +68,12 @@ Each item of this list will have the following attributes:
 
 ## Optional configuration
 
-**TODO:** Document this.
+You can have more control on the generated page, by setting a few more options
+in your Pelican config file:
+
+*   `PLANET_MAX_ARTICLES`: The maximum number of articles to show on the page.
+
+    By default, all articles from all feeds will be added to the page.
 
 ## Legalities
 

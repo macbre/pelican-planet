@@ -31,12 +31,13 @@ def generate(generator):
     config = generator.context
 
     feeds = config['PLANET_FEEDS']
+    max_articles = config.get('PLANET_MAX_ARTICLES', 20)
     template = Path(config['PLANET_TEMPLATE'])
     destination = Path(config['PLANET_PAGE'])
 
     planet = Planet(feeds)
     planet.get_feeds()
-    planet.write_page(template, destination)
+    planet.write_page(template, destination, max_articles=max_articles)
 
 
 def register():

@@ -166,3 +166,29 @@ def test_write_page_from_multiple_feeds(datadir, tmpdir):
     p.write_page(templatepath, destinationpath)
 
     assert destinationpath.open().read().strip() == expected
+
+
+def test_write_page_from_multiple_feeds_with_total_limit(datadir, tmpdir):
+    from pelican_planet.planet import Planet
+
+    templatepath = Path(datadir.join('planet.md.tmpl').strpath)
+    destinationpath = Path(tmpdir.join('planet.md').strpath)
+    assert not destinationpath.exists()
+
+    expected = '\n\n\n'.join([
+        'Some blogs aggregated here.',
+        '# Sept cent quarante-quatre',
+        '# Sloubi 325 !',
+        '# Sloubi 324 !',
+        '# Unagi',
+        ])
+
+    feeds = {
+        'Le blog à Perceval': 'file://%s/perceval.atom.xml' % datadir,
+        "L'auberge à Karadoc": 'file://%s/karadoc.atom.xml' % datadir,
+        }
+    p = Planet(feeds)
+    p.get_feeds()
+    p.write_page(templatepath, destinationpath, max_articles=4)
+
+    assert destinationpath.read_text().strip() == expected
