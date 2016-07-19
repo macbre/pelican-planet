@@ -29,8 +29,10 @@ class FeedError(Exception):
 
 
 class Planet:
-    def __init__(self, feeds, max_summary_length=None):
+    def __init__(
+            self, feeds, max_articles_per_feed=None, max_summary_length=None):
         self._feeds = feeds
+        self._max_articles_per_feed = max_articles_per_feed
         self._max_summary_length = max_summary_length
 
         self._articles = []
@@ -62,7 +64,9 @@ class Planet:
 
                 yield article
 
-        articles = list(_get_articles())
+        articles = sorted(
+            _get_articles(), key=attrgetter('updated'), reverse=True)
+        articles = articles[:self._max_articles_per_feed]
 
         return articles
 

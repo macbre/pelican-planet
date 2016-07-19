@@ -77,6 +77,11 @@ in your Pelican config file:
 
     By default, all articles from all feeds will be added to the page.
 
+*   `PLANET_MAX_ARTICLES_PER_FEED`: The maximum of articles from a single feed
+    ending on the page.
+
+    By default all articles of a given feed are considered.
+
 *   `PLANET_MAX_SUMMARY_LENGTH`: The maximum number of words kept from the
     summary.
 

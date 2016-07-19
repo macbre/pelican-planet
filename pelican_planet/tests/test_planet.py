@@ -16,6 +16,7 @@
 # along with pelican-planet.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from collections import OrderedDict
 from pathlib import Path
 from ssl import CertificateError
 
@@ -39,6 +40,48 @@ def test_get_feeds(datadir):
     assert titles == [
         'Sloubi 1 !', 'Sloubi 2 !', 'Sloubi 3 !', 'Sloubi 4 !', 'Sloubi 5 !',
         'Sloubi 324 !', 'Sloubi 325 !',
+        ]
+
+
+def test_get_multiple_feeds(datadir):
+    from pelican_planet.planet import Planet
+
+    feeds = OrderedDict([  # Need to guarantee ordering for this test
+        ('Le blog à Perceval', 'file://%s/perceval.atom.xml' % datadir),
+        ("L'auberge à Karadoc", 'file://%s/karadoc.atom.xml' % datadir),
+        ])
+    p = Planet(feeds)
+    p.get_feeds()
+
+    assert p._feeds == feeds
+    assert len(p._articles) == 10
+
+    titles = [a['title'] for a in p._articles]
+    titles.reverse()
+    assert titles == [
+        "Le gras, c'est la vie", 'Unagi', 'Sept cent quarante-quatre',
+        'Sloubi 1 !', 'Sloubi 2 !', 'Sloubi 3 !', 'Sloubi 4 !', 'Sloubi 5 !',
+        'Sloubi 324 !', 'Sloubi 325 !',
+        ]
+
+
+def test_get_multiple_feeds_with_limit(datadir):
+    from pelican_planet.planet import Planet
+
+    feeds = OrderedDict([  # Need to guarantee ordering for this test
+        ('Le blog à Perceval', 'file://%s/perceval.atom.xml' % datadir),
+        ("L'auberge à Karadoc", 'file://%s/karadoc.atom.xml' % datadir),
+        ])
+    p = Planet(feeds, max_articles_per_feed=2)
+    p.get_feeds()
+
+    assert p._feeds == feeds
+    assert len(p._articles) == 4
+
+    titles = [a['title'] for a in p._articles]
+    titles.reverse()
+    assert titles == [
+        'Unagi', 'Sept cent quarante-quatre', 'Sloubi 324 !', 'Sloubi 325 !',
         ]
 
 
@@ -191,4 +234,4 @@ def test_write_page_from_multiple_feeds_with_total_limit(datadir, tmpdir):
     p.get_feeds()
     p.write_page(templatepath, destinationpath, max_articles=4)
 
-    assert destinationpath.read_text().strip() == expected
+    assert destinationpath.open().read().strip() == expected
