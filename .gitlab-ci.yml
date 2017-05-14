@@ -1,0 +1,37 @@
+.setup: &setup_definition
+  before_script:
+  - pip install --user -r requirements-dev.txt
+  - pip install -e .
+  - export PATH="~/.local/bin:$PATH"
+
+.test: &test_definition
+  <<: *setup_definition
+  script:
+  - py.test
+
+
+test:Python-3.4:
+  <<: *test_definition
+  image: python:3.4-slim
+
+test:Python-3.5:
+  <<: *test_definition
+  image: python:3.5-slim
+
+test:Python-3.6:
+  <<: *test_definition
+  image: python:3.6-slim
+
+
+test:Coverage:
+  <<: *setup_definition
+  image: python:3-slim
+  script:
+  - py.test --cov=pelican_planet --cov-report=term-missing --cov-fail-under=82
+
+
+Code Quality:
+  <<: *setup_definition
+  image: python:3-slim
+  script:
+  - py.test --flakes --mccabe --pep8 -m 'flakes or mccabe or pep8'
