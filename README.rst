@@ -104,4 +104,4 @@ silly and tedious legal document before accepting your contributions.
 In case you're wondering, we do **not** consider that a website built with
 pelican-planet would need to be licensed under the AGPL.
 
-.. _GNU Affero General Public License, either version 3 or any later version: http://www.gnu.org/licenses/agpl.html
+.. _GNU Affero General Public License, either version 3 or any later version: https://www.gnu.org/licenses/agpl.html
