@@ -30,8 +30,8 @@ def get_requirements(path):
     return list(lines)
 
 
-README = Path('README.md').open().read()
-CHANGES = Path('CHANGES.md').open().read()
+README = Path('README.rst').open().read()
+CHANGES = Path('CHANGES.rst').open().read()
 REQUIREMENTS = get_requirements('requirements.txt')
 
 
