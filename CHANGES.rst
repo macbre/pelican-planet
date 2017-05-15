@@ -1,6 +1,17 @@
 Release History
 ===============
 
+0.9.1
+-----
+
+This is a trivial release, fixing some release-related issues:
+
+* Moved to reStructuredText for the README/CHANGES files, as that's what Pypi
+  prefers;
+* Fixed the link to the AGPLv3+ license;
+* Added a missing Pypi classifier;
+* Added missing files to the dist tarball;
+
 0.9
 ---
 
