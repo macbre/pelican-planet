@@ -42,6 +42,7 @@ setup(
     version='0.9',
     classifiers=[
         'Development Status :: 4 - Beta',
+        'Framework :: Pelican :: Plugins',
         ('License :: OSI Approved :: GNU Affero General Public License v3 or '
          'later (AGPLv3+)'),
         'Programming Language :: Python :: 3.4',
