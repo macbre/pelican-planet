@@ -19,11 +19,49 @@ Then, in your Pelican config file, enable the plugin:
         ...
         ]
 
-**TODO:** Document this.
+Next, declare the feeds you want to aggregate in your Pelican config file:
+
+    PLANET_FEEDS = {
+        'Some amazing blog': 'https://example1.org/feeds/blog.atom.xml',
+        'Another great blog': 'http://example2.org/feeds/blog.atom.xml',
+        }
+
+Write a [Jinja2](http://jinja.pocoo.org/) template for your aggregation page.
+For example, if the rest of your website is generated from Markdown pages, then
+create a `planet.md.tmpl` file with the following contents:
+
+
+    Some blogs aggregated here.
+
+    {% for article in articles %}
+    # {{ article.title }}
+
+    {% endfor %}
+
+Finally, declare the template and destination page in your Pelican config file:
+
+    PLANET_TEMPLATE = 'planet.md.tmpl'
+    PLANET_PAGE = 'content/planet.md'
+
+Then rebuild your website as usual using the `pelican` command line, and you
+should have your blog aggregation page.
+
+You'll probably want to rebuild your website periodically though, maybe with a
+systemd timer or a cron job, to always fetch the latest articles in the feeds
+you aggregate.
 
 ## Template design
 
-**TODO:** Document this.
+The template for your aggregation page will be passed an `articles` variable,
+containing the list of, well, articles aggregated.
+
+Each item of this list will have the following attributes:
+
+*   `title`: The title of the article;
+
+*   `author`: The author of the article;
+
+*   `link`: The URL to the article on its original website;
 
 ## Optional configuration
 
