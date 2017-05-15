@@ -39,9 +39,9 @@ setup(
     name='pelican-planet',
     description='Blog aggregator plugin for Pelican',
     long_description='%s\n\n%s' % (README, CHANGES),
-    version='0.0',
+    version='0.9',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 4 - Beta',
         ('License :: OSI Approved :: GNU Affero General Public License v3 or '
          'later (AGPLv3+)'),
         'Programming Language :: Python :: 3.4',
@@ -53,7 +53,7 @@ setup(
         ],
     author='Mathieu Bridon',
     author_email='bochecha@daitauha.fr',
-    url='',  # TODO
+    url='https://framagit.org/bochecha/pelican-planet',
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
