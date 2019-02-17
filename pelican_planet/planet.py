@@ -14,7 +14,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with pelican-planet.  If not, see <http://www.gnu.org/licenses/>.
-
+import logging
 
 from operator import attrgetter
 
@@ -37,7 +37,11 @@ class Planet:
 
         self._articles = []
 
+        self.logger = logging.getLogger(self.__class__.__name__)
+
     def _get_feed(self, name, url):
+        self.logger.info('Parsing "%s" feed from <%s> ...', name, url)
+
         parsed = feedparser.parse(url)
         status = parsed.get('status')
 
@@ -89,4 +93,4 @@ class Planet:
         articles = articles[:max_articles]
 
         template = Template(template.open().read())
-        destination.open(mode='w').write(template.render(articles=articles))
+        destination.open(mode='w').write(template.render(articles=articles, feeds=self._feeds.items()))
