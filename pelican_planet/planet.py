@@ -92,5 +92,11 @@ class Planet:
             self._articles, key=attrgetter('updated'), reverse=True)
         articles = articles[:max_articles]
 
+        feeds = [
+            # feed name, feed URL, blog URL (protocol + domain)
+            (name, url, re.match(r'https?://[^/]+/', url).group(0))
+            for name, url in self._feeds.items()
+        ]
+
         template = Template(template.open().read())
-        destination.open(mode='w').write(template.render(articles=articles, feeds=self._feeds.items()))
+        destination.open(mode='w').write(template.render(articles=articles, feeds=feeds))
