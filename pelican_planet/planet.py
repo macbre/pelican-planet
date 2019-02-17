@@ -67,6 +67,9 @@ class Planet:
                     article['summary'], max_words=self._max_summary_length)
                 article['feed_name'] = feed_name
 
+                # https://docs.python.org/3/library/datetime.html
+                article['date_iso'] = article['date'].strftime('%Y-%m-%d')  # e.g. 2002-12-04
+
                 yield article
 
         articles = sorted(
