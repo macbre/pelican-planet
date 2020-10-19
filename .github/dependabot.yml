@@ -1,0 +1,8 @@
+version: 2
+updates:
+
+  # Maintain PyPI dependencies
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "daily"
