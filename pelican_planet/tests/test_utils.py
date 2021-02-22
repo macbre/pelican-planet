@@ -22,15 +22,16 @@ import pytest
 
 
 @pytest.mark.parametrize(
-    'date_string, expected',
+    "date_string, expected",
     [
-        ('2016-03-30T00:00:00Z', (2016, 3, 30, 0, 0, 0)),
-        ('2016-07-06T10:15:00+02:00', (2016, 7, 6, 8, 15, 0)),
+        ("2016-03-30T00:00:00Z", (2016, 3, 30, 0, 0, 0)),
+        ("2016-07-06T10:15:00+02:00", (2016, 7, 6, 8, 15, 0)),
     ],
     ids=[
-        'iso-utc',
-        'iso-local',
-    ])
+        "iso-utc",
+        "iso-local",
+    ],
+)
 def test_make_date(date_string, expected):
     from pelican_planet.utils import make_date
 
@@ -41,17 +42,18 @@ def test_make_date(date_string, expected):
 
 
 @pytest.mark.parametrize(
-    'text, expected, max_words',
+    "text, expected, max_words",
     [
-        ('<p>A short text.</p>', '<p>A short text.</p>', None),
-        ('<p>A short text.</p>', '<p>A short text.</p>', 10),
-        ('<p>A short text.</p>', '<p>A short …</p>', 2),
+        ("<p>A short text.</p>", "<p>A short text.</p>", None),
+        ("<p>A short text.</p>", "<p>A short text.</p>", 10),
+        ("<p>A short text.</p>", "<p>A short …</p>", 2),
     ],
     ids=[
-        'no-limit',
-        'big-limit',
-        'small-limit',
-    ])
+        "no-limit",
+        "big-limit",
+        "small-limit",
+    ],
+)
 def test_make_summary(text, expected, max_words):
     from pelican_planet.utils import make_summary
 

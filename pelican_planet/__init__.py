@@ -30,16 +30,18 @@ def generate(generator):
 
     config = generator.context
 
-    feeds = config['PLANET_FEEDS']
-    max_articles_per_feed = config.get('PLANET_MAX_ARTICLES_PER_FEED', None)
-    max_articles = config.get('PLANET_MAX_ARTICLES', 20)
-    max_summary_length = config.get('PLANET_MAX_SUMMARY_LENGTH', None)
-    template = Path(config['PLANET_TEMPLATE'])
-    destination = Path(config['PLANET_PAGE'])
+    feeds = config["PLANET_FEEDS"]
+    max_articles_per_feed = config.get("PLANET_MAX_ARTICLES_PER_FEED", None)
+    max_articles = config.get("PLANET_MAX_ARTICLES", 20)
+    max_summary_length = config.get("PLANET_MAX_SUMMARY_LENGTH", None)
+    template = Path(config["PLANET_TEMPLATE"])
+    destination = Path(config["PLANET_PAGE"])
 
     planet = Planet(
-        feeds, max_articles_per_feed=max_articles_per_feed,
-        max_summary_length=max_summary_length)
+        feeds,
+        max_articles_per_feed=max_articles_per_feed,
+        max_summary_length=max_summary_length,
+    )
     planet.get_feeds()
     planet.write_page(template, destination, max_articles=max_articles)
 

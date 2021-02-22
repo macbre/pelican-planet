@@ -21,4 +21,4 @@ import pytest
 
 @pytest.fixture
 def datadir(pytestconfig):
-    return pytestconfig.rootdir.join('pelican_planet', 'tests', 'data')
+    return pytestconfig.rootdir.join("pelican_planet", "tests", "data")

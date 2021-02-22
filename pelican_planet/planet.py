@@ -30,8 +30,7 @@ class FeedError(Exception):
 
 
 class Planet:
-    def __init__(
-            self, feeds, max_articles_per_feed=None, max_summary_length=None):
+    def __init__(self, feeds, max_articles_per_feed=None, max_summary_length=None):
         self._feeds = feeds
         self._max_articles_per_feed = max_articles_per_feed
         self._max_summary_length = max_summary_length
@@ -44,16 +43,15 @@ class Planet:
         self.logger.info('Parsing "%s" feed from <%s> ...', name, url)
 
         parsed = feedparser.parse(url)
-        status = parsed.get('status')
+        status = parsed.get("status")
 
-        if status is None and parsed['bozo']:
+        if status is None and parsed["bozo"]:
             raise FeedError(
-                "Could not download %s's feed: %s"
-                % (name, parsed['bozo_exception']))
+                "Could not download %s's feed: %s" % (name, parsed["bozo_exception"])
+            )
 
         elif status == 404:
-            raise FeedError(
-                "Could not download %s's feed: not found" % name)
+            raise FeedError("Could not download %s's feed: not found" % name)
 
         elif status != 200:
             raise FeedError("Error with %s's feed: %s" % (name, parsed))
@@ -62,20 +60,22 @@ class Planet:
 
     def _get_articles(self, feed, feed_name):
         def _get_articles():
-            for article in feed['entries']:
-                article['updated'] = make_date(article['updated'])
-                article['summary'] = make_summary(
-                    article['summary'], max_words=self._max_summary_length)
-                article['feed_name'] = feed_name
+            for article in feed["entries"]:
+                article["updated"] = make_date(article["updated"])
+                article["summary"] = make_summary(
+                    article["summary"], max_words=self._max_summary_length
+                )
+                article["feed_name"] = feed_name
 
                 # https://docs.python.org/3/library/datetime.html
-                article['date_iso'] = article['date'].strftime('%Y-%m-%d')  # e.g. 2002-12-04
+                article["date_iso"] = article["date"].strftime(
+                    "%Y-%m-%d"
+                )  # e.g. 2002-12-04
 
                 yield article
 
-        articles = sorted(
-            _get_articles(), key=attrgetter('updated'), reverse=True)
-        articles = articles[:self._max_articles_per_feed]
+        articles = sorted(_get_articles(), key=attrgetter("updated"), reverse=True)
+        articles = articles[: self._max_articles_per_feed]
 
         return articles
 
@@ -85,22 +85,23 @@ class Planet:
                 feed = self._get_feed(name, url)
 
             except FeedError as e:
-                print('ERROR: %s' % e)
+                print("ERROR: %s" % e)
                 continue
 
             articles = self._get_articles(feed, name)
             self._articles.extend(articles)
 
     def write_page(self, template, destination, max_articles=None):
-        articles = sorted(
-            self._articles, key=attrgetter('updated'), reverse=True)
+        articles = sorted(self._articles, key=attrgetter("updated"), reverse=True)
         articles = articles[:max_articles]
 
         feeds = [
             # feed name, feed URL, blog URL (protocol + domain)
-            (name, url, re.match(r'https?://[^/]+/', url).group(0))
+            (name, url, re.match(r"https?://[^/]+/", url).group(0))
             for name, url in self._feeds.items()
         ]
 
         template = Template(template.open().read())
-        destination.open(mode='w').write(template.render(articles=articles, feeds=feeds))
+        destination.open(mode="w").write(
+            template.render(articles=articles, feeds=feeds)
+        )

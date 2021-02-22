@@ -29,4 +29,4 @@ def make_summary(text, max_words=None):
     if max_words is None:
         return text
 
-    return truncate_html_words(text, max_words, end_text='…')
+    return truncate_html_words(text, max_words, end_text="…")
