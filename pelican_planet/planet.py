@@ -46,13 +46,13 @@ class Planet:
         status = parsed.get("status")
 
         if status is None:
-            if url.startswith('file://'):
-                return parsed
-
             if parsed["bozo"]:
                 raise FeedError(
                     "Could not download %s's feed: %s" % (name, parsed["bozo_exception"])
                 )
+
+            if url.startswith('file://'):
+                return parsed
 
         elif status == 404:
             raise FeedError("Could not download %s's feed: not found" % name)
