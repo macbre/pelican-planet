@@ -28,7 +28,10 @@ import pytest
         ("2016-07-06T10:15:00+02:00", (2016, 7, 6, 8, 15, 0)),
         ("2021-05-24T11:08:00+01:00", (2021, 5, 24, 10, 8, 0)),
         # https://kvf.fo/rss/news-english
-        ('<span class="date-display-single" property="dc:date" datatype="xsd:dateTime" content="2021-05-24T11:08:00+01:00">Mán, 24 Mai 2021 11:08 GMT</span>', (2021, 5, 24, 10, 8, 0)),
+        (
+            '<span class="date-display-single" property="dc:date" datatype="xsd:dateTime" content="2021-05-24T11:08:00+01:00">Mán, 24 Mai 2021 11:08 GMT</span>',
+            (2021, 5, 24, 10, 8, 0),
+        ),
     ],
     ids=[
         "iso-utc",

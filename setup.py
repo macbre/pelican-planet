@@ -22,41 +22,43 @@ from setuptools import setup, find_packages
 
 
 def get_requirements(path):
-    lines = Path(path).open('r')
+    lines = Path(path).open("r")
     lines = map(lambda l: l.strip(), lines)
     lines = filter(lambda l: bool(l), lines)
-    lines = filter(lambda l: not l.startswith('#'), lines)
+    lines = filter(lambda l: not l.startswith("#"), lines)
 
     return list(lines)
 
 
-README = Path('README.rst').open().read()
-CHANGES = Path('CHANGES.rst').open().read()
-REQUIREMENTS = get_requirements('requirements.txt')
+README = Path("README.rst").open().read()
+CHANGES = Path("CHANGES.rst").open().read()
+REQUIREMENTS = get_requirements("requirements.txt")
 
 
 setup(
-    name='pelican-planet',
-    description='Blog aggregator plugin for Pelican',
-    long_description='%s\n\n%s' % (README, CHANGES),
-    version='0.10.0',
+    name="pelican-planet",
+    description="Blog aggregator plugin for Pelican",
+    long_description="%s\n\n%s" % (README, CHANGES),
+    version="0.10.0",
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Framework :: Pelican :: Plugins',
-        ('License :: OSI Approved :: GNU Affero General Public License v3 or '
-         'later (AGPLv3+)'),
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3 :: Only',
-        'Topic :: Internet :: WWW/HTTP',
-        'Topic :: Internet :: WWW/HTTP :: Site Management',
-        ],
-    author='Mathieu Bridon',
-    author_email='bochecha@daitauha.fr',
-    url='https://framagit.org/bochecha/pelican-planet',
+        "Development Status :: 4 - Beta",
+        "Framework :: Pelican :: Plugins",
+        (
+            "License :: OSI Approved :: GNU Affero General Public License v3 or "
+            "later (AGPLv3+)"
+        ),
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3 :: Only",
+        "Topic :: Internet :: WWW/HTTP",
+        "Topic :: Internet :: WWW/HTTP :: Site Management",
+    ],
+    author="Mathieu Bridon",
+    author_email="bochecha@daitauha.fr",
+    url="https://framagit.org/bochecha/pelican-planet",
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
     install_requires=REQUIREMENTS,
-    )
+)
