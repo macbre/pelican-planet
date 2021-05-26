@@ -39,22 +39,26 @@ class Planet:
 
         self.logger = logging.getLogger(self.__class__.__name__)
 
-    def _get_feed(self, name, url):
+    def _get_feed(self, name: str, url: str):
         self.logger.info('Parsing "%s" feed from <%s> ...', name, url)
 
         parsed = feedparser.parse(url)
         status = parsed.get("status")
 
-        if status is None and parsed["bozo"]:
-            raise FeedError(
-                "Could not download %s's feed: %s" % (name, parsed["bozo_exception"])
-            )
+        if status is None:
+            if url.startswith('file://'):
+                return parsed
+
+            if parsed["bozo"]:
+                raise FeedError(
+                    "Could not download %s's feed: %s" % (name, parsed["bozo_exception"])
+                )
 
         elif status == 404:
             raise FeedError("Could not download %s's feed: not found" % name)
 
         elif status != 200:
-            raise FeedError("Error with %s's feed: %s" % (name, parsed))
+            raise FeedError("Error with %s's feed: %s (HTTP status %s)" % (name, parsed, status))
 
         return parsed
 
