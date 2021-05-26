@@ -101,7 +101,7 @@ class Planet:
 
         feeds = [
             # feed name, feed URL, blog URL (protocol + domain)
-            (name, url, re.match(r"https?://[^/]+/", url).group(0))
+            (name, url, re.match(r"(file:///|https?://)[^/]+/", url).group(0))
             for name, url in self._feeds.items()
         ]
 
