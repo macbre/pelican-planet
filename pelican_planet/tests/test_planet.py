@@ -261,3 +261,35 @@ def test_write_page_from_multiple_feeds_with_total_limit(datadir, tmpdir):
     p.write_page(templatepath, destinationpath, max_articles=4)
 
     assert destinationpath.open().read().strip() == expected
+
+
+def test_ssl_errors_handling(datadir, tmpdir):
+    from pelican_planet.planet import Planet
+
+    templatepath = Path(datadir.join("planet.md.tmpl").strpath)
+    destinationpath = Path(tmpdir.join("planet.md").strpath)
+    assert not destinationpath.exists()
+
+    expected = "\n\n\n".join(
+        [
+            "Some blogs aggregated here.",
+            "# Sept cent quarante-quatre",
+            "# Unagi",
+            "# Le gras, c'est la vie",
+        ]
+    )
+
+    feeds = {
+        # https://badssl.com/
+        # causes: urllib.error.URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED]
+        # certificate verify failed: certificate has expired (_ssl.c:1129)>
+        "Expired Cert": "https://expired.badssl.com/",
+        # broken site should be skipped
+        "L'auberge à Karadoc": "file://%s/karadoc.atom.xml" % datadir,
+    }
+
+    p = Planet(feeds)
+    p.get_feeds()
+    p.write_page(templatepath, destinationpath, max_articles=4)
+
+    assert destinationpath.open().read().strip() == expected
