@@ -17,6 +17,8 @@
 import logging
 import re
 
+from urllib.error import URLError
+
 from operator import attrgetter
 
 import feedparser
@@ -42,7 +44,12 @@ class Planet:
     def _get_feed(self, name: str, url: str):
         self.logger.info('Parsing "%s" feed from <%s> ...', name, url)
 
-        parsed = feedparser.parse(url)
+        try:
+            parsed = feedparser.parse(url)
+        except URLError as ex:
+            # handle broken SSL certificates
+            raise FeedError("Could not download %s's feed: %s" % (name, str(ex)))
+
         status = parsed.get("status")
 
         if status is None:
