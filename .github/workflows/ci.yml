@@ -1,4 +1,4 @@
-name: Tests
+name: CI
 
 on:
   push:
@@ -6,25 +6,39 @@ on:
   pull_request:
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
+        # https://github.com/actions/python-versions/blob/main/versions-manifest.json
         python-version:
+        - "3.6"
         - "3.7"
         - "3.8"
         - "3.9"
+        - "3.10.0-rc.1
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Load ~/.cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cache
+
+        key: cache-${{ matrix.python-version }}-${{ hashFiles('requirements.txt') }}
+
     - name: Install dependencies
       run: |
+        pip install wheel
         pip install -r requirements.txt
         pip install .
 
