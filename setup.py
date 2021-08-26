@@ -57,7 +57,7 @@ setup(
     ],
     author="Mathieu Bridon",
     author_email="bochecha@daitauha.fr",
-    url="https://framagit.org/bochecha/pelican-planet",
+    url="https://github.com/macbre/pelican-planet",
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
