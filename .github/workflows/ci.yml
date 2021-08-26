@@ -46,8 +46,16 @@ jobs:
       run: |
         make check
 
-  black:
+    # https://coveralls-python.readthedocs.io/en/latest/usage/index.html
+    # upload coverage report for just one of Python version matrix runs
+    - name: Upload coverage report to Coveralls
+      if: matrix.python-version == '3.9'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: coveralls --service=github
 
+
+  black:
     runs-on: ubuntu-latest
 
     steps:
