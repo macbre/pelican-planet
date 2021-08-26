@@ -34,21 +34,28 @@ jobs:
         path: |
           ~/.cache
 
-        key: cache-${{ matrix.python-version }}-${{ hashFiles('requirements.txt') }}
+        key: cache-${{ matrix.python-version }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('requirements-dev.txt') }}
 
     - name: Install dependencies
       run: |
         pip install wheel
-        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
         pip install .
 
     - name: Test with pytest
       run: |
-        pip install pytest
-        pytest
+        make check
+
+    # https://coveralls-python.readthedocs.io/en/latest/usage/index.html
+    # upload coverage report for just one of Python version matrix runs
+    - name: Upload coverage report to Coveralls
+      if: matrix.python-version == '3.9'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: coveralls --service=github
+
 
   black:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -61,7 +68,11 @@ jobs:
 
     - name: Install black
       run: |
-        pip install black
+        pip install wheel
+
+        # black==21.7b0
+        set -x
+        pip install $(grep black requirements-dev.txt)
 
     - name: Check code formatting
       run: |
