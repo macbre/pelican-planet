@@ -47,7 +47,22 @@ jobs:
         pip install pytest
         pytest
 
-    - name: Format with black
+  black:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2.2.2
+      with:
+        python-version: 3.9
+
+    - name: Install black
       run: |
         pip install black
-        black .
+
+    - name: Check code formatting
+      run: |
+        black --check .
