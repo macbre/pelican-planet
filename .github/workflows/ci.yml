@@ -42,6 +42,14 @@ jobs:
         pip install -r requirements-dev.txt
         pip install .
 
+    - name: Start the test server
+      run: |
+        ./test-server.sh &
+        sleep 2
+
+        set -x
+        curl -so /dev/null 'http://localhost:8088/karadoc.atom.xml'
+
     - name: Test with pytest
       run: |
         make check

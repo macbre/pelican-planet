@@ -1,4 +1,4 @@
 include COPYING
 include *.rst
 include *.txt
-include pelican_planet/tests/data/*
+exclude pelican_planet/tests/*

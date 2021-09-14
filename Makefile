@@ -1,6 +1,8 @@
 check:
 	# pylint *.py tests/
-	pytest --cov=pelican_planet --cov-report=term --cov-report=xml --cov-fail-under=80 -vv
+
+	# run ./test-server.sh before executing this one
+	pytest -o log_cli=true --cov=pelican_planet --cov-report=term --cov-report=xml --cov-fail-under=80 -vv
 
 black:
 	black .

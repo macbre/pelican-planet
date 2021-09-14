@@ -70,6 +70,8 @@ class Planet:
                 "Error with %s's feed: %s (HTTP status %s)" % (name, parsed, status)
             )
 
+        self.logger.info("GET %s HTTP %d", url, status)
+
         return parsed
 
     def _get_articles(self, feed, feed_name):
