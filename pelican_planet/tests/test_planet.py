@@ -293,3 +293,18 @@ def test_ssl_errors_handling(datadir, tmpdir):
     p.write_page(templatepath, destinationpath, max_articles=4)
 
     assert destinationpath.open().read().strip() == expected
+
+
+def test_http_requests():
+    # make sure to run ./test-server.sh before executing this test case
+    from pelican_planet.planet import Planet
+
+    feeds = {
+        "Karadoc": "http://localhost:8088/karadoc.atom.xml",
+    }
+
+    p = Planet(feeds)
+    p.get_feeds()
+    articles = p._articles
+
+    assert len(articles) == 3
