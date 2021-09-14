@@ -1,2 +1,3 @@
 #!/bin/bash
-python -m http.server --directory $(pwd)/pelican_planet/tests/data --bind 0.0.0.0 8088
+cd ./pelican_planet/tests/data  # Python 3.6 does not support --directory option for http.server module
+python -m http.server --bind 0.0.0.0 8088
