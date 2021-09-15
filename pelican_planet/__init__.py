@@ -25,7 +25,7 @@ from .planet import Planet
 import os
 import logging
 
-log_level = os.environ.get('PELICAN_LOGLEVEL', 'INFO').upper()
+log_level = os.environ.get("PELICAN_LOGLEVEL", "INFO").upper()
 logging.basicConfig(level=log_level)
 
 
@@ -42,7 +42,7 @@ def generate(generator):
     template = Path(config["PLANET_TEMPLATE"])
     destination = Path(config["PLANET_PAGE"])
 
-    logging.info('Will fetch %d feeds and store in %s', feeds, destination)
+    logging.info("Will fetch %d feeds and store in %s", feeds, destination)
 
     _planet = Planet(
         feeds,
