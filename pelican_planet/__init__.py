@@ -14,14 +14,19 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with pelican-planet.  If not, see <http://www.gnu.org/licenses/>.
-
-
 from pathlib import Path
 
 from pelican import signals
 from pelican.generators import PagesGenerator
 
 from .planet import Planet
+
+# set up logging
+import os
+import logging
+
+log_level = os.environ.get('PELICAN_LOGLEVEL', 'INFO').upper()
+logging.basicConfig(level=log_level)
 
 
 def generate(generator):
@@ -37,13 +42,17 @@ def generate(generator):
     template = Path(config["PLANET_TEMPLATE"])
     destination = Path(config["PLANET_PAGE"])
 
-    planet = Planet(
+    logging.info('Will fetch %d feeds and store in %s', feeds, destination)
+
+    _planet = Planet(
         feeds,
         max_articles_per_feed=max_articles_per_feed,
         max_summary_length=max_summary_length,
     )
-    planet.get_feeds()
-    planet.write_page(template, destination, max_articles=max_articles)
+    _planet.get_feeds()
+    _planet.write_page(template, destination, max_articles=max_articles)
+
+    logging.info("Planet files saved in %s", destination)
 
 
 def register():
