@@ -47,14 +47,10 @@ setup(
             "License :: OSI Approved :: GNU Affero General Public License v3 or "
             "later (AGPLv3+)"
         ),
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3 :: Only",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Site Management",
     ],
+    python_requires=">=3.7",
     author="Mathieu Bridon",
     author_email="bochecha@daitauha.fr",
     url="https://github.com/macbre/pelican-planet",
