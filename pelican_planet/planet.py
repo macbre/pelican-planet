@@ -17,6 +17,8 @@
 import logging
 import re
 
+from time import mktime
+
 from urllib.error import URLError
 
 from operator import attrgetter
@@ -65,7 +67,7 @@ class Planet:
         elif status == 404:
             raise FeedError("Could not download %s's feed: not found" % name)
 
-        elif status != 200:
+        elif status < 200 and status > 399:
             raise FeedError(
                 "Error with %s's feed: %s (HTTP status %s)" % (name, parsed, status)
             )
@@ -78,7 +80,10 @@ class Planet:
         def _get_articles():
             for article in feed["entries"]:
                 try:
-                    article["updated"] = make_date(article["updated"])
+                    updated = make_date(article["updated"])
+
+                    article["updated"] = updated
+                    article["timestamp"] = int(mktime(updated.timetuple()))
                     article["summary"] = make_summary(
                         article["summary"], max_words=self._max_summary_length
                     )
@@ -94,7 +99,7 @@ class Planet:
                 # e.g. KeyError - updated
                 except KeyError as ex:
                     logging.warning(
-                        f"Missing an expected '{str(ex)}' entry in the artile: {repr(article)}"
+                        f"Missing an expected {str(ex)} entry in the artile: {repr(article)}"
                     )
 
                 # e.g. dateutil.parser._parser.ParserError: Unknown string format: Z
@@ -110,7 +115,7 @@ class Planet:
                     )
                     raise ex
 
-        articles = sorted(_get_articles(), key=attrgetter("updated"), reverse=True)
+        articles = sorted(_get_articles(), key=attrgetter("timestamp"), reverse=True)
         articles = articles[: self._max_articles_per_feed]
 
         return articles
@@ -130,7 +135,7 @@ class Planet:
                 logging.error(f"Error parsing <{url}> - {str(ex)}", exc_info=True)
 
     def write_page(self, template, destination, max_articles=None):
-        articles = sorted(self._articles, key=attrgetter("updated"), reverse=True)
+        articles = sorted(self._articles, key=attrgetter("timestamp"), reverse=True)
         articles = articles[:max_articles]
 
         feeds = [
