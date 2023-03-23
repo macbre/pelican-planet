@@ -211,8 +211,8 @@ def test_write_page_from_multiple_feeds(datadir, tmpdir):
     expected = "\n\n\n".join(
         [
             "Some blogs aggregated here.",
-            "# Sept cent quarante-quatre",
             "# Sloubi 325 !",
+            "# Sept cent quarante-quatre",
             "# Sloubi 324 !",
             "# Unagi",
             "# Sloubi 5 !",
@@ -245,8 +245,8 @@ def test_write_page_from_multiple_feeds_with_total_limit(datadir, tmpdir):
     expected = "\n\n\n".join(
         [
             "Some blogs aggregated here.",
-            "# Sept cent quarante-quatre",
             "# Sloubi 325 !",
+            "# Sept cent quarante-quatre",
             "# Sloubi 324 !",
             "# Unagi",
         ]
