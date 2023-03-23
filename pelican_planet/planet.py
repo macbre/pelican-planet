@@ -77,18 +77,22 @@ class Planet:
     def _get_articles(self, feed, feed_name):
         def _get_articles():
             for article in feed["entries"]:
-                article["updated"] = make_date(article["updated"])
-                article["summary"] = make_summary(
-                    article["summary"], max_words=self._max_summary_length
-                )
-                article["feed_name"] = feed_name
+                try:
+                    article["updated"] = make_date(article["updated"])
+                    article["summary"] = make_summary(
+                        article["summary"], max_words=self._max_summary_length
+                    )
+                    article["feed_name"] = feed_name
 
-                # https://docs.python.org/3/library/datetime.html
-                article["date_iso"] = article["date"].strftime(
-                    "%Y-%m-%d"
-                )  # e.g. 2002-12-04
+                    # https://docs.python.org/3/library/datetime.html
+                    article["date_iso"] = article["date"].strftime(
+                        "%Y-%m-%d"
+                    )  # e.g. 2002-12-04
 
-                yield article
+                    yield article
+                except Exception as e:
+                    logging.error(f"Error when parsing {repr(article)}", exc_info=True)
+                    raise e
 
         articles = sorted(_get_articles(), key=attrgetter("updated"), reverse=True)
         articles = articles[: self._max_articles_per_feed]
@@ -100,8 +104,8 @@ class Planet:
             try:
                 feed = self._get_feed(name, url)
 
-            except FeedError as e:
-                print("ERROR: %s" % e)
+            except FeedError:
+                logging.error(f"Error parsing <{url}>", exc_info=True)
                 continue
 
             articles = self._get_articles(feed, name)
