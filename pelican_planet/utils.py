@@ -15,13 +15,14 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with pelican-planet.  If not, see <http://www.gnu.org/licenses/>.
 import re
+from datetime import datetime
 
 from dateutil import parser as dtparser
 
 from pelican.utils import truncate_html_words
 
 
-def make_date(date_string: str):
+def make_date(date_string: str) -> datetime:
     # content="2021-05-24T11:08:00+01:00"
     if 'content="' in date_string:
         matches = re.search(r'content="([^"]+)"', date_string)
@@ -31,7 +32,7 @@ def make_date(date_string: str):
     return dtparser.parse(date_string)
 
 
-def make_summary(text, max_words=None):
+def make_summary(text, max_words=None) -> str:
     if max_words is None:
         return text
 
