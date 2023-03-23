@@ -50,26 +50,24 @@ class Planet:
             parsed = feedparser.parse(url)
         except URLError as ex:
             # handle broken SSL certificates
-            raise FeedError("Could not download %s's feed: %s" % (name, str(ex)))
+            raise FeedError(f"Could not download {name}'s feed: {str(ex)}")
 
         status = parsed.get("status")
 
         if status is None:
             if parsed["bozo"]:
                 raise FeedError(
-                    "Could not download %s's feed: %s"
-                    % (name, parsed["bozo_exception"])
+                    f'Could not download {name}\'s feed: {parsed["bozo_exception"]}'
                 )
 
             if url.startswith("file://"):
                 return parsed
 
         elif status == 404:
-            raise FeedError("Could not download %s's feed: not found" % name)
+            raise FeedError(f"Could not download {name}'s feed: not found")
 
-        # properly handle redirects, they should not prevent us from parsing the feed
         elif status < 200 or status > 399:
-            raise FeedError("Error with %s's feed (HTTP status %s)" % (name, status))
+            raise FeedError(f"Error with {name}'s feed (HTTP status {status})")
 
         self.logger.info("GET %s HTTP %d", url, status)
 
@@ -135,13 +133,16 @@ class Planet:
 
     def write_page(self, template, destination, max_articles=None):
         articles = sorted(self._articles, key=attrgetter("timestamp"), reverse=True)
+        print(f"Fetched {len(articles)} articles (will render up to {max_articles})")
+
         articles = articles[:max_articles]
 
         feeds = [
             # feed name, feed URL, blog URL (protocol + domain)
-            (name, url, re.match(r"(file:///|https?://)[^/]+/", url).group(0))
+            (name, url, re.match(r"(file:///|https?://)[^/]+/", url)[0])
             for name, url in self._feeds.items()
         ]
+        print(f"Feeds parsed: {len(feeds)}")
 
         template = Template(template.open().read())
         destination.open(mode="w").write(
