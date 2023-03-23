@@ -69,9 +69,7 @@ class Planet:
 
         # properly handle redirects, they should not prevent us from parsing the feed
         elif status < 200 or status > 399:
-            raise FeedError(
-                "Error with %s's feed: %s (HTTP status %s)" % (name, parsed, status)
-            )
+            raise FeedError("Error with %s's feed (HTTP status %s)" % (name, status))
 
         self.logger.info("GET %s HTTP %d", url, status)
 
