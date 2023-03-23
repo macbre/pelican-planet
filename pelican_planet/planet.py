@@ -124,10 +124,6 @@ class Planet:
                 articles = self._get_articles(feed, name)
                 self._articles.extend(articles)
 
-            # e.g. CRITICAL TypeError: can't compare offset-naive and offset-aware datetimes
-            except TypeError as ex:
-                logging.error(f"Error parsing <{url}> - {str(ex)}", exc_info=True)
-
             except FeedError as ex:
                 logging.error(f"Error parsing <{url}> - {str(ex)}", exc_info=True)
 
