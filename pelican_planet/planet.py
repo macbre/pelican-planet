@@ -144,3 +144,7 @@ class Planet:
         destination.open(mode="w").write(
             template.render(articles=articles, feeds=feeds)
         )
+
+        # render some information when run in GitHub Actions
+        # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-a-notice-message
+        print(f"::notice::Fetched {len(articles)} articles from {len(feeds)} feeds")
