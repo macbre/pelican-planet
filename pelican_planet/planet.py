@@ -129,7 +129,9 @@ class Planet:
 
     def write_page(self, template, destination, max_articles=None):
         articles = sorted(self._articles, key=attrgetter("timestamp"), reverse=True)
-        print(f"Fetched {len(articles)} articles (will render up to {max_articles})")
+        logging.info(
+            f"Fetched {len(articles)} articles (will render up to {max_articles})"
+        )
 
         articles = articles[:max_articles]
 
@@ -138,7 +140,7 @@ class Planet:
             (name, url, re.match(r"(file:///|https?://)[^/]+/", url)[0])
             for name, url in self._feeds.items()
         ]
-        print(f"Feeds parsed: {len(feeds)}")
+        logging.info(f"Feeds parsed: {len(feeds)}")
 
         template = Template(template.open().read())
         destination.open(mode="w").write(
