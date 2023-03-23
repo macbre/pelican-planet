@@ -91,6 +91,12 @@ class Planet:
 
                     yield article
 
+                # e.g. KeyError - updated
+                except KeyError as ex:
+                    logging.warning(
+                        f"Missing an expected '{str(ex)}' entry in the artile: {repr(article)}"
+                    )
+
                 # e.g. dateutil.parser._parser.ParserError: Unknown string format: Z
                 except ValueError as ex:
                     logging.error(
@@ -113,13 +119,15 @@ class Planet:
         for name, url in self._feeds.items():
             try:
                 feed = self._get_feed(name, url)
+                articles = self._get_articles(feed, name)
+                self._articles.extend(articles)
+
+            # e.g. CRITICAL TypeError: can't compare offset-naive and offset-aware datetimes
+            except TypeError as ex:
+                logging.error(f"Error parsing <{url}> - {str(ex)}", exc_info=True)
 
             except FeedError as ex:
                 logging.error(f"Error parsing <{url}> - {str(ex)}", exc_info=True)
-                continue
-
-            articles = self._get_articles(feed, name)
-            self._articles.extend(articles)
 
     def write_page(self, template, destination, max_articles=None):
         articles = sorted(self._articles, key=attrgetter("updated"), reverse=True)
