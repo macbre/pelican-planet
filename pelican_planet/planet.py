@@ -76,9 +76,9 @@ class Planet:
 
         return parsed
 
-    def _get_articles(self, feed, feed_name):
+    def _get_articles(self, feed: object, feed_name: str):
         def _get_articles():
-            for article in feed["entries"]:
+            for article in feed.get("entries", []):
                 try:
                     updated = make_date(article["updated"])
 
