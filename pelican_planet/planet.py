@@ -67,7 +67,8 @@ class Planet:
         elif status == 404:
             raise FeedError("Could not download %s's feed: not found" % name)
 
-        elif status < 200 and status > 399:
+        # properly handle redirects, they should not prevent us from parsing the feed
+        elif status < 200 or status > 399:
             raise FeedError(
                 "Error with %s's feed: %s (HTTP status %s)" % (name, parsed, status)
             )
