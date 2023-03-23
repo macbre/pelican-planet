@@ -90,9 +90,19 @@ class Planet:
                     )  # e.g. 2002-12-04
 
                     yield article
-                except Exception as e:
-                    logging.error(f"Error when parsing {repr(article)}", exc_info=True)
-                    raise e
+
+                # e.g. dateutil.parser._parser.ParserError: Unknown string format: Z
+                except ValueError as ex:
+                    logging.error(
+                        f"Error parsing the date: {repr(article['updated'])} - {str(ex)}"
+                    )
+
+                except Exception as ex:
+                    logging.error(
+                        f"Unknown error when parsing {repr(article)} - {str(ex)}",
+                        exc_info=True,
+                    )
+                    raise ex
 
         articles = sorted(_get_articles(), key=attrgetter("updated"), reverse=True)
         articles = articles[: self._max_articles_per_feed]
@@ -104,8 +114,8 @@ class Planet:
             try:
                 feed = self._get_feed(name, url)
 
-            except FeedError:
-                logging.error(f"Error parsing <{url}>", exc_info=True)
+            except FeedError as ex:
+                logging.error(f"Error parsing <{url}> - {str(ex)}", exc_info=True)
                 continue
 
             articles = self._get_articles(feed, name)
