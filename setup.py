@@ -50,7 +50,7 @@ setup(
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Site Management",
     ],
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     author="Mathieu Bridon",
     author_email="bochecha@daitauha.fr",
     url="https://github.com/macbre/pelican-planet",
