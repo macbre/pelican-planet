@@ -16,6 +16,7 @@
 # along with pelican-planet.  If not, see <http://www.gnu.org/licenses/>.
 import logging
 import re
+from http.client import HTTPException
 
 from time import mktime
 
@@ -51,6 +52,11 @@ class Planet:
         except URLError as ex:
             # handle broken SSL certificates
             raise FeedError(f"Could not download {name}'s feed: {str(ex)}")
+        except HTTPException as ex:
+            # handle HTTP exceptions, e.g. RemoteDisconnected: Remote end closed connection without response
+            raise FeedError(
+                f"Could not download {name}'s feed: HTTP request to <{url}> failed with {str(ex)}"
+            )
 
         status = parsed.get("status")
 
