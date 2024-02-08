@@ -104,6 +104,25 @@ def test_get_multiple_feeds_with_limit(datadir):
     ]
 
 
+def test_get_nitter_feed_with_media_content_tags(datadir):
+    from pelican_planet.planet import Planet
+
+    feeds = {
+        "Nitter": f"file://{datadir}/nitter.rss.xml",
+    }
+
+    p = Planet(feeds, max_articles_per_feed=5)
+    p.get_feeds()
+
+    assert p._feeds == feeds
+    assert len(p._articles) == 5
+
+    entry = p._articles[0]
+
+    assert str(entry['title']).startswith('The #Faroese #WordOfTheYear 2023')
+    assert entry['published'] == 'Fri, 02 Feb 2024 14:42:20 GMT'
+
+
 def test_get_no_feeds():
     from pelican_planet.planet import Planet
 
