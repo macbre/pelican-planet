@@ -1,4 +1,4 @@
 feedparser==6.0.11
 Jinja2==3.1.5
-pelican==4.10.2
+pelican==4.11.0
 python-dateutil==2.9.0.post0
