@@ -39,7 +39,7 @@ setup(
     name="pelican-planet",
     description="Blog aggregator plugin for Pelican",
     long_description="%s\n\n%s" % (README, CHANGES),
-    version="0.22.0",
+    version="0.23.0",
     classifiers=[
         "Development Status :: 5 - Stable",
         "Framework :: Pelican :: Plugins",
@@ -50,7 +50,7 @@ setup(
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Site Management",
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.9",
     author="Mathieu Bridon",
     author_email="bochecha@daitauha.fr",
     url="https://github.com/macbre/pelican-planet",
