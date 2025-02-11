@@ -1,6 +1,6 @@
 -r requirements.txt
 
 black==25.1.0
-coverage==7.6.11
+coverage==7.6.12
 pytest==8.3.4
 pytest-cov==6.0.0
